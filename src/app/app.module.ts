@@ -9,6 +9,12 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSliderModule} from "@angular/material/slider";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatInputModule} from "@angular/material/input";
+import {MatNativeDateModule} from "@angular/material/core";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {JsonPipe, NgIf} from "@angular/common";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
@@ -22,7 +28,15 @@ import {MatSliderModule} from "@angular/material/slider";
     LeafletModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgIf,
+    MatFormFieldModule,
+    JsonPipe
   ],
   providers: [],
   bootstrap: [AppComponent]

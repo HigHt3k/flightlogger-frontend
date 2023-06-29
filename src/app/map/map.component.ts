@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {HttpClient} from "@angular/common/http";
 import chroma from "chroma-js";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-map',
@@ -23,6 +23,10 @@ export class MapComponent implements OnInit {
   map!: L.Map;
   flightLines: any[] = [];
   flightLogs: any[] = [];
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   ngOnInit(): void {
     this.initializeMap();
@@ -48,19 +52,32 @@ export class MapComponent implements OnInit {
       radius: 500
     }).addTo(this.map);
 
-    this.fetchFlightLogs();
+    const now = new Date();
+    let yesterday = new Date();
+    yesterday.setHours(yesterday.getHours() - 24);
+    this.fetchFlightLogs(yesterday, now);
   }
 
   clearFlightLines(): void {
-    this.flightLines.forEach((line: L.Polyline) => {
+    this.flightLines.forEach((obj: any) => {
+      const line = obj[1];
       line.removeFrom(this.map);
     });
     this.flightLines = [];
   }
 
-  fetchFlightLogs(): void {
+  setNewDate(start: string, end: string): void {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    this.fetchFlightLogs(startDate, endDate);
+  }
+
+  fetchFlightLogs(start: Date, end: Date): void {
+    const startDate = start.toISOString();
+    const endDate = end.toISOString();
+    console.log(`Fetching flight logs from ${startDate} to ${endDate}`)
     this.http
-      .get(`http://${this.serverIp}:${this.serverPort}/map?startDateTime=2023-06-29T12:00:00&endDateTime=2023-06-29T23:59:59`)
+      .get(`http://${this.serverIp}:${this.serverPort}/map?startDateTime=${startDate}&endDateTime=${endDate}`)
       .subscribe((data: any) => {
         this.flightLogs = data;
         this.drawFlightLines();
@@ -101,5 +118,9 @@ export class MapComponent implements OnInit {
         line.setStyle({opacity: 0});
       }
     });
+  }
+
+  test(testValue: any) {
+    console.log(testValue);
   }
 }

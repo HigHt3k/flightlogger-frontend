@@ -1,3 +1,7 @@
-<p>Aircraft Map</p>
+<h1>Aircraft Map</h1>
+<div>
+  <p>Altitude Range:</p>
+  <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options" (valueChange)="onAltitudeRangeChange([value, highValue])"></ngx-slider>
+</div>
 <div id="map"></div>
 <a routerLink="/">Go to Index Page</a>

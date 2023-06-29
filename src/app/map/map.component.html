@@ -15,5 +15,12 @@
   <input #minAltitude matSliderStartThumb (valueChange)="changeAltitude(minAltitude.value, maxAltitude.value)">
   <input #maxAltitude matSliderEndThumb (valueChange)="changeAltitude(minAltitude.value, maxAltitude.value)">
 </mat-slider>
+<p>Enter specific aircraft registration:</p>
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Aircraft Registration(s)</mat-label>
+    <input matInput #acReg value="" placeholder="D-AINA,D-AINB" (input)="filterAircraft(acReg.value)">
+  </mat-form-field>
+</form>
 <div id="map"></div>
 <a routerLink="/">Go to Index Page</a>

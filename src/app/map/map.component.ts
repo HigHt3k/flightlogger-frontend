@@ -20,6 +20,8 @@ export class MapComponent implements OnInit {
   minAltitude: number = 0;
   maxAltitude: number = 50000;
 
+  acReg: string = "";
+
   map!: L.Map;
   flightLines: any[] = [];
   flightLogs: any[] = [];
@@ -38,6 +40,10 @@ export class MapComponent implements OnInit {
     this.updateFlightLineVisibility();
   }
 
+  filterAircraft(acReg: string) {
+    this.acReg = acReg;
+    this.updateFlightLineVisibility();
+  }
 
   private initializeMap(): void {
     this.map = L.map('map').setView([53.673500, 9.985630], 7.5);
@@ -101,7 +107,7 @@ export class MapComponent implements OnInit {
           const color = this.altitudeColors(altitude).hex();
           const tooltipContent = "altitude: " + altitude + "<br>" + "callsign: " + callsign + "<br>" + "acReg: " + acReg + "<br>" + "acType: " + acType;
           const line = L.polyline([p1, p2], { color : color }).bindTooltip(tooltipContent).addTo(this.map);
-          const obj = [altitude, line];
+          const obj = [altitude, line, acReg, acType];
           this.flightLines.push(obj);
         }
       });
@@ -112,7 +118,10 @@ export class MapComponent implements OnInit {
     this.flightLines.forEach((obj: any) => {
       const altitude: number = obj[0];
       const line: L.Polyline = obj[1];
-      if(altitude >= this.minAltitude && altitude <= this.maxAltitude) {
+      const acReg: string = obj[2];
+      const acRegs: string[] = this.acReg.split(",");
+      if(altitude >= this.minAltitude && altitude <= this.maxAltitude
+          && (acRegs.includes(acReg) || acReg == "")) {
         line.setStyle({opacity: 1});
       } else {
         line.setStyle({opacity: 0});

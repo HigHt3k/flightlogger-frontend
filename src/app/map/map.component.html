@@ -1,7 +1,7 @@
 <h1>Aircraft Map</h1>
-<div>
-  <p>Altitude Range:</p>
-  <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options" (valueChange)="onAltitudeRangeChange([value, highValue])"></ngx-slider>
-</div>
+<mat-slider min="0" max="50000" step="1000">
+  <input #minAltitude matSliderStartThumb (valueChange)="changeAltitude(minAltitude.value, maxAltitude.value)">
+  <input #maxAltitude matSliderEndThumb (valueChange)="changeAltitude(minAltitude.value, maxAltitude.value)">
+</mat-slider>
 <div id="map"></div>
 <a routerLink="/">Go to Index Page</a>

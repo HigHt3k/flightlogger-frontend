@@ -7,7 +7,8 @@ import { IndexComponent } from './index/index.component';
 import { MapComponent } from './map/map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {HttpClientModule} from "@angular/common/http";
-import {NgxSliderModule} from "ngx-slider-v2";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSliderModule} from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {NgxSliderModule} from "ngx-slider-v2";
     AppRoutingModule,
     LeafletModule,
     HttpClientModule,
-    NgxSliderModule
+    BrowserAnimationsModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

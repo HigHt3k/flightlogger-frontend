@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {HttpClient} from "@angular/common/http";
 import chroma from "chroma-js";
-import { Options } from 'ng5-slider';
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-map',
@@ -16,12 +16,9 @@ export class MapComponent implements OnInit {
   serverPort: String = "9090";
 
   altitudeColors = chroma.scale(['green', 'yellow', 'orange', 'red', 'purple', 'black']).domain([0, 10000, 20000, 30000, 40000, 50000]);
-  value: number = 0;
-  highValue: number = 50000;
-  options: Options = {
-    floor: 0,
-    ceil: 50000
-  };
+
+  minAltitude: number = 0;
+  maxAltitude: number = 50000;
 
   map!: L.Map;
   flightLines: any[] = [];
@@ -31,9 +28,13 @@ export class MapComponent implements OnInit {
     this.initializeMap();
   }
 
-  onAltitudeRangeChange(altitudeRange: number[]) {
-    this.updateFlightLineVisibility(altitudeRange);
+  changeAltitude(minAltitude: string, maxAltitude: string) {
+    console.log(minAltitude + " " + maxAltitude);
+    this.minAltitude = Number(minAltitude);
+    this.maxAltitude = Number(maxAltitude);
+    this.updateFlightLineVisibility();
   }
+
 
   private initializeMap(): void {
     this.map = L.map('map').setView([53.673500, 9.985630], 7.5);
@@ -91,11 +92,11 @@ export class MapComponent implements OnInit {
     });
   }
 
-  updateFlightLineVisibility(altitudeRange: number[]): void {
+  updateFlightLineVisibility(): void {
     this.flightLines.forEach((obj: any) => {
       const altitude: number = obj[0];
       const line: L.Polyline = obj[1];
-      if(altitude >= altitudeRange[0] && altitude <= altitudeRange[1]) {
+      if(altitude >= this.minAltitude && altitude <= this.maxAltitude) {
         line.setStyle({opacity: 1});
       } else {
         line.setStyle({opacity: 0});

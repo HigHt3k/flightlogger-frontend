@@ -41,6 +41,7 @@ export class MapComponent implements OnInit {
   }
 
   filterAircraft(acReg: string) {
+    console.log("Filtering: " + acReg + " " + acReg.length);
     this.acReg = acReg;
     this.updateFlightLineVisibility();
   }
@@ -121,7 +122,7 @@ export class MapComponent implements OnInit {
       const acReg: string = obj[2];
       const acRegs: string[] = this.acReg.split(",");
       if(altitude >= this.minAltitude && altitude <= this.maxAltitude
-          && (acRegs.includes(acReg) || acReg == "")) {
+          && (this.acReg == "" || acRegs.length == 0 || acRegs.includes(acReg))) {
         line.setStyle({opacity: 1});
       } else {
         line.setStyle({opacity: 0});

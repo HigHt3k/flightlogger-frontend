@@ -29,7 +29,6 @@ export class MapComponent implements OnInit {
   }
 
   changeAltitude(minAltitude: string, maxAltitude: string) {
-    console.log(minAltitude + " " + maxAltitude);
     this.minAltitude = Number(minAltitude);
     this.maxAltitude = Number(maxAltitude);
     this.updateFlightLineVisibility();

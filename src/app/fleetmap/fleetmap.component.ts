@@ -39,6 +39,19 @@ export class FleetmapComponent implements AfterViewInit {
     const tlx = ham;
     const pha = ham;
 
+    this.addLabel(ham, "HAM");
+    this.addLabel(sti, "STI");
+    this.addLabel(azs, "AZS");
+    this.addLabel(lax, "LAX");
+    this.addLabel(oka, "OKA");
+    this.addLabel(nrt, "NRT");
+    this.addLabel(muc, "MUC");
+    this.addLabel(fra, "FRA");
+    this.addLabel(atl, "ATL");
+    this.addLabel(jfk, "JFK");
+    this.addLabel(dbx, "DBX");
+    this.addLabel(bkk, "BKK");
+
     this.drawOnMap(ham, sti, '#396297');
     this.drawOnMap(sti, azs, '#396297');
     this.drawOnMap(azs, lax, '#396297');
@@ -57,6 +70,8 @@ export class FleetmapComponent implements AfterViewInit {
     this.drawOnMap(fra, ham, '#396297');
     this.drawOnMap(ham, tlx, '#396297');
     this.drawOnMap(tlx, pha, '#ee9a3a');
+
+
   }
 
   private drawOnMap(p1: number[], p2: number[], color: string): void {
@@ -73,7 +88,6 @@ export class FleetmapComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.setMapAspectRatio(16 / 32);  // Sets aspect ratio to 16:9
     this.initializeMap();
-    this.saveScreenshot();
   }
 
   private setMapAspectRatio(aspectRatio: number): void {
@@ -81,17 +95,13 @@ export class FleetmapComponent implements AfterViewInit {
     mapContainerEl.style.height = `${mapContainerEl.offsetWidth / aspectRatio}px`;
   }
 
-  async saveScreenshot() {
-    const mapElement = document.getElementById('map');  // Get the map DOM element
-    if (mapElement) {
-      const canvas = await html2canvas(mapElement);  // Convert the map to a canvas
-      const imgData = canvas.toDataURL();  // Convert the canvas to an image data URL
-      // Do something with imgData...
-      // For instance, download the image:
-      const link = document.createElement('a');
-      link.href = imgData;
-      link.download = 'map.png';
-      link.click();
-    }
+  private addLabel(longlat: number[], text: string): void {
+    const labelIcon = L.divIcon({
+      className: 'label',
+      html: text,
+      iconSize: [200, 40],
+      iconAnchor: [0, 0]
+    });  // Larger iconSize
+    L.marker([longlat[1], longlat[0]], {icon: labelIcon}).addTo(this.map);
   }
 }

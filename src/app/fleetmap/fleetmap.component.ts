@@ -16,12 +16,12 @@ export class FleetmapComponent implements AfterViewInit {
 
   private initializeMap(): void {
     this.map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('https://api.mapbox.com/styles/v1/johannt98/clkiqod8k000401ph6ikk4zwq/tiles/{z}/{x}/{y}?access_token={token}', {
+    L.tileLayer('https://api.mapbox.com/styles/v1/johannt98/clkiqod8k000401ph6ikk4zwq/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
       tileSize: 512,
       zoomOffset: -1,
-      accessToken: 'token'
+      accessToken: ''
     }).addTo(this.map);
 
     const ham = [9.991111, 53.630278];  // Note: [lng, lat] format is used

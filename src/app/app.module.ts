@@ -15,12 +15,14 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {JsonPipe, NgIf} from "@angular/common";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import { FleetmapComponent } from './fleetmap/fleetmap.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
-    MapComponent
+    MapComponent,
+    FleetmapComponent
   ],
   imports: [
     BrowserModule,

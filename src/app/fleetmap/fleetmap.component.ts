@@ -21,7 +21,7 @@ export class FleetmapComponent implements AfterViewInit {
       maxZoom: 18,
       tileSize: 512,
       zoomOffset: -1,
-      accessToken: ''
+      accessToken: 'pk.eyJ1Ijoiam9oYW5udDk4IiwiYSI6ImNsbGp3bHE5ODF6dmszc21nNWVwNXA4NmUifQ.AgwLl9Bz7DGPJNydxSOm5Q'
     }).addTo(this.map);
 
     const ham = [9.991111, 53.630278];  // Note: [lng, lat] format is used
@@ -39,7 +39,7 @@ export class FleetmapComponent implements AfterViewInit {
     const tlx = ham;
     const pha = ham;
 
-    this.addLabel(ham, "HAM");
+    /*this.addLabel(ham, "HAM");
     this.addLabel(sti, "STI");
     this.addLabel(azs, "AZS");
     this.addLabel(lax, "LAX");
@@ -51,6 +51,8 @@ export class FleetmapComponent implements AfterViewInit {
     this.addLabel(jfk, "JFK");
     this.addLabel(dbx, "DBX");
     this.addLabel(bkk, "BKK");
+
+     */
 
     this.drawOnMap(ham, sti, '#396297');
     this.drawOnMap(sti, azs, '#396297');
@@ -78,7 +80,7 @@ export class FleetmapComponent implements AfterViewInit {
     const p1_p2 = greatCircle(p1, p2, {properties: {stroke: color}});
     L.geoJSON(p1_p2, {
       style: function() {
-        return { color: color };
+        return { color: color, weight: 3 };
       }
     }).addTo(this.map);
   }
@@ -86,7 +88,7 @@ export class FleetmapComponent implements AfterViewInit {
   @ViewChild('map', { static: false }) mapContainer!: ElementRef;
 
   ngAfterViewInit(): void {
-    this.setMapAspectRatio(16 / 32);  // Sets aspect ratio to 16:9
+    this.setMapAspectRatio(16 / 9);  // Sets aspect ratio to 16:9
     this.initializeMap();
   }
 
